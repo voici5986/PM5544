@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="zh-CN">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -123,7 +124,7 @@
       font-size: 2.25vw;
     }
 
-    .tc-bar.top-small p + p {
+    .tc-bar.top-small p+p {
       margin-top: 0.2em;
     }
 
@@ -150,7 +151,7 @@
         font-size: 20px;
       }
 
-      .tc-bar.top-small p + p {
+      .tc-bar.top-small p+p {
         margin-top: 4px;
       }
     }
@@ -176,12 +177,12 @@
     }
 
     .control-grid.top-grid {
-      grid-template-columns: repeat(3, minmax(100px, 1fr));
+      grid-template-columns: repeat(2, minmax(130px, 1fr));
     }
 
     .control-grid.bottom-grid {
       grid-template-columns: repeat(2, minmax(130px, 1fr));
-      margin-top: 10px;
+      margin-top: 0;
     }
 
     .control-grid label {
@@ -191,6 +192,31 @@
       font-size: 16px;
       color: #d2d2d2;
       letter-spacing: 0.02em;
+    }
+
+    .label-title {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+    }
+
+    .label-hint {
+      color: #bfbfbf;
+      font-size: 0.9em;
+    }
+
+    .top-main {
+      grid-column: 1 / -1;
+    }
+
+    .control-grid label code {
+      font-family: "VT323 Embedded", monospace;
+      font-size: 0.95em;
+      color: #e3e3e3;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 3px;
+      padding: 0 4px;
     }
 
     .control-grid input {
@@ -209,15 +235,27 @@
       color: #adadad;
     }
 
-    .control-section-title {
-      margin: 8px 0 6px;
-      font-size: 16px;
-      letter-spacing: 0.03em;
-      color: #d8d8d8;
+    .control-note code {
+      font-family: "VT323 Embedded", monospace;
+      font-size: 0.95em;
+      color: #dedede;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 3px;
+      padding: 0 4px;
+    }
+
+    .control-gap-section {
+      display: block;
+      height: 24px;
+    }
+
+    .control-gap-actions {
+      display: block;
+      height: 24px;
     }
 
     .control-actions {
-      margin-top: 10px;
+      margin-top: 0;
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
@@ -271,49 +309,58 @@
     }
   </style>
 </head>
+
 <body>
   <div class="app">
     <div class="stage">
       <div class="viewport">
         <canvas id="pm5544"></canvas>
         <div class="overlay" id="overlay">
-          <div class="tc-bar top-large" id="tbarlarge"><p id="tbar"></p></div>
+          <div class="tc-bar top-large" id="tbarlarge">
+            <p id="tbar"></p>
+          </div>
           <div class="tc-bar top-small" id="tbarsmall">
             <p id="tbar1"></p>
             <p id="tbar2"></p>
           </div>
-          <div class="tc-bar bottom-right" id="bbar-right"><p id="bbar"></p></div>
-          <div class="tc-bar bottom-full" id="bbar-full"><p id="bbarfull"></p></div>
+          <div class="tc-bar bottom-right" id="bbar-right">
+            <p id="bbar"></p>
+          </div>
+          <div class="tc-bar bottom-full" id="bbar-full">
+            <p id="bbarfull"></p>
+          </div>
         </div>
       </div>
     </div>
     <section class="control-panel" aria-label="PM5544 参数面板">
-      <div class="control-section-title">顶部栏参数</div>
       <div class="control-grid top-grid">
-        <label for="param-tbar">tbar
+        <label class="top-main" for="param-tbar"><span class="label-title"><code>tbar</code><span
+              class="label-hint">单行顶栏</span></span>
           <input id="param-tbar" type="text" placeholder="例: TIME 或 STATION" />
         </label>
-        <label for="param-tbar1">tbar1
+        <label for="param-tbar1"><span class="label-title"><code>tbar1</code><span
+              class="label-hint">双行顶栏上</span></span>
           <input id="param-tbar1" type="text" placeholder="例: PM5544" />
         </label>
-        <label for="param-tbar2">tbar2
+        <label for="param-tbar2"><span class="label-title"><code>tbar2</code><span
+              class="label-hint">双行顶栏下</span></span>
           <input id="param-tbar2" type="text" placeholder="例: DATE" />
         </label>
       </div>
-      <div class="control-note">`tbar` = 大字单行顶栏；`tbar1/tbar2` = 双行小字顶栏。</div>
-      <div class="control-note">`tbar` 覆盖 `tbar1/tbar2`</div>
+      <div class="control-note"><code>tbar</code> 会覆盖 <code>tbar1/tbar2</code></div>
+      <div class="control-gap-section" aria-hidden="true"></div>
 
-      <div class="control-section-title">底部栏参数</div>
       <div class="control-grid bottom-grid">
-        <label for="param-bbar">bbar
+        <label for="param-bbar"><span class="label-title"><code>bbar</code><span class="label-hint">左下栏</span></span>
           <input id="param-bbar" type="text" placeholder="例: DATE" />
         </label>
-        <label for="param-bbarfull">bbarfull
+        <label for="param-bbarfull"><span class="label-title"><code>bbarfull</code><span
+              class="label-hint">底部中栏</span></span>
           <input id="param-bbarfull" type="text" placeholder="例: NO SIGNAL" />
         </label>
       </div>
-      <div class="control-note">`bbar` = 左下小栏；`bbarfull` = 底部中间全宽栏。</div>
-      <div class="control-note">`TIME`/`DATE` 写在哪个参数里，就会显示在对应栏位并自动更新。</div>
+      <div class="control-note"><code>TIME</code>/<code>DATE</code> 填入任一栏位后，会显示当前时间或日期并自动更新</div>
+      <div class="control-gap-actions" aria-hidden="true"></div>
       <div class="control-actions">
         <button id="btn-apply" type="button">应用并更新 URL</button>
         <button id="btn-reset" type="button">清空参数</button>
@@ -590,6 +637,17 @@
       const width = 1920;
       const height = 1440;
       const render = getRenderValues(params);
+      const svgScriptCloseTag = "</" + "script>";
+      const getDynamicKind = (rawValue) => {
+        const token = (rawValue ?? "").trim().toUpperCase();
+        if (token === "TIME") {
+          return "time";
+        }
+        if (token === "DATE") {
+          return "date";
+        }
+        return "";
+      };
 
       const topBarWidth = width * 0.14;
       const topBarX = (width - topBarWidth) / 2;
@@ -620,9 +678,19 @@
         #nosignal-layer { display: block; }
       }`;
 
-      const textNode = (content, x, y, fontSize) => {
+      let hasDynamicText = false;
+      const textNode = (content, x, y, fontSize, dynamicKind = "", nodeId = "") => {
         const safe = escapeXml(content);
-        return `<text class="tc-text" x="${x}" y="${y}" fill="#ffffff" font-size="${fontSize}" text-anchor="middle" dominant-baseline="middle" transform="translate(${x},0) scale(1.5,1) translate(${-x},0)">${safe}</text>`;
+        const attrs = [];
+        if (nodeId) {
+          attrs.push(`id="${nodeId}"`);
+        }
+        if (dynamicKind) {
+          attrs.push(`data-dynamic="${dynamicKind}"`);
+          hasDynamicText = true;
+        }
+        const attrString = attrs.length > 0 ? ` ${attrs.join(" ")}` : "";
+        return `<text${attrString} class="tc-text" x="${x}" y="${y}" fill="#ffffff" font-size="${fontSize}" text-anchor="middle" dominant-baseline="middle" transform="translate(${x},0) scale(1.5,1) translate(${-x},0)">${safe}</text>`;
       };
 
       const contentNodes = [
@@ -631,29 +699,111 @@
 
       if (render.topLarge) {
         contentNodes.push(`<rect x="${topBarX}" y="${topBarY}" width="${topBarWidth}" height="${topBarH}" fill="#000000"/>`);
-        contentNodes.push(textNode(render.topLarge, width / 2, topBarY + (topBarH / 2), 40));
+        contentNodes.push(
+          textNode(
+            render.topLarge,
+            width / 2,
+            topBarY + (topBarH / 2),
+            40,
+            getDynamicKind(params.get("tbar")),
+            "svg-dyn-top-large"
+          )
+        );
       } else if (render.top1 || render.top2) {
         contentNodes.push(`<rect x="${topBarX}" y="${topBarY}" width="${topBarWidth}" height="${topBarH}" fill="#000000"/>`);
         if (render.top1) {
-          contentNodes.push(textNode(render.top1, width / 2, topSmallLine1Y, 20));
+          contentNodes.push(
+            textNode(
+              render.top1,
+              width / 2,
+              topSmallLine1Y,
+              20,
+              getDynamicKind(params.get("tbar1")),
+              "svg-dyn-top-1"
+            )
+          );
         }
         if (render.top2) {
-          contentNodes.push(textNode(render.top2, width / 2, topSmallLine2Y, 20));
+          contentNodes.push(
+            textNode(
+              render.top2,
+              width / 2,
+              topSmallLine2Y,
+              20,
+              getDynamicKind(params.get("tbar2")),
+              "svg-dyn-top-2"
+            )
+          );
         }
       }
 
       if (render.bottomRight) {
         contentNodes.push(`<rect x="${bottomRightX}" y="${bottomRightY}" width="${bottomRightW}" height="${bottomRightH}" fill="#000000"/>`);
-        contentNodes.push(textNode(render.bottomRight, bottomRightX + (bottomRightW / 2), bottomRightY + (bottomRightH / 2), 40));
+        contentNodes.push(
+          textNode(
+            render.bottomRight,
+            bottomRightX + (bottomRightW / 2),
+            bottomRightY + (bottomRightH / 2),
+            40,
+            getDynamicKind(params.get("bbar")),
+            "svg-dyn-bottom-right"
+          )
+        );
       }
       if (render.bottomFull) {
         contentNodes.push(`<rect x="${bottomFullX}" y="${bottomFullY}" width="${bottomFullW}" height="${bottomFullH}" fill="#000000"/>`);
-        contentNodes.push(textNode(render.bottomFull, width / 2, bottomFullY + (bottomFullH / 2), 40));
+        contentNodes.push(
+          textNode(
+            render.bottomFull,
+            width / 2,
+            bottomFullY + (bottomFullH / 2),
+            40,
+            getDynamicKind(params.get("bbarfull")),
+            "svg-dyn-bottom-full"
+          )
+        );
       }
+
+      const dynamicScript = hasDynamicText
+        ? `<script><![CDATA[
+      (function () {
+        const wkdays = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+        const mnths = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+
+        function formatClock(now) {
+          const h = String(now.getHours()).padStart(2, "0");
+          const m = String(now.getMinutes()).padStart(2, "0");
+          const s = String(now.getSeconds()).padStart(2, "0");
+          return h + ":" + m + ":" + s;
+        }
+
+        function formatDate(now) {
+          const w = wkdays[now.getDay()];
+          const d = String(now.getDate()).padStart(2, "0");
+          const m = mnths[now.getMonth()];
+          return w + " " + d + " " + m;
+        }
+
+        function updateDynamicTexts() {
+          const now = new Date();
+          const timeText = formatClock(now);
+          const dateText = formatDate(now);
+          const timeNodes = document.querySelectorAll('text[data-dynamic="time"]');
+          const dateNodes = document.querySelectorAll('text[data-dynamic="date"]');
+          timeNodes.forEach((node) => { node.textContent = timeText; });
+          dateNodes.forEach((node) => { node.textContent = dateText; });
+        }
+
+        updateDynamicTexts();
+        setInterval(updateDynamicTexts, 1000);
+      })();
+      ]]>${svgScriptCloseTag}`
+        : "";
 
       const noSignalFontSize = Math.max(84, Math.floor(width * 0.085));
       const nodes = [
         `<style>${svgStyle}</style>`,
+        dynamicScript,
         `<g id="content-layer">${contentNodes.join("\n")}</g>`,
         `<g id="nosignal-layer"><rect x="0" y="0" width="${width}" height="${height}" fill="#000000"/><text class="tc-text" x="${width / 2}" y="${height / 2}" fill="#ffffff" font-size="${noSignalFontSize}" text-anchor="middle" dominant-baseline="middle">NO SIGNAL</text></g>`
       ];
@@ -1211,5 +1361,5 @@
     resizeAndRender();
   </script>
 </body>
-</html>
 
+</html>
